@@ -21,6 +21,13 @@ pio run -t upload
 pio device monitor
 ```
 
+## CI and documentation
+
+GitLab CI builds the `esp32-2432s028` firmware for every pipeline and exposes
+the binary, ELF, and linker map as downloadable job artifacts for 30 days.
+Pushes to the default branch also publish the static documentation in `docs/`
+through GitLab Pages.
+
 The interface uses **fiat currency per 1 BTC** (for example, `100000`). Tap an input to open the numeric keypad. The arrow button switches between fiat-to-BTC/satoshi and BTC/satoshi-to-fiat conversions.
 
 Changing fiat never downloads data automatically. Press **Refresh** for the active fiat or **Refresh all** in Configuration to download and save new rates.
