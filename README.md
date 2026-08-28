@@ -23,10 +23,10 @@ pio device monitor
 
 ## CI and documentation
 
-GitLab CI builds the `esp32-2432s028` firmware for every pipeline and exposes
-the binary, ELF, and linker map as downloadable job artifacts for 30 days.
-Pushes to the default branch also publish the static documentation in `docs/`
-through GitLab Pages.
+GitHub Actions builds the `esp32-2432s028` firmware on every push and pull
+request, then exposes the binary, ELF, and linker map as downloadable workflow
+artifacts for 30 days. Pushes to the default branch also publish the static
+documentation in `docs/` through GitHub Pages.
 
 The interface uses **fiat currency per 1 BTC** (for example, `100000`). Tap an input to open the numeric keypad. The arrow button switches between fiat-to-BTC/satoshi and BTC/satoshi-to-fiat conversions.
 

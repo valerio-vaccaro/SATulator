@@ -1,0 +1,74 @@
+name: Build firmware and publish documentation
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-firmware:
+    name: Build ESP32 firmware
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install PlatformIO
+        run: python -m pip install platformio
+
+      - name: Build firmware
+        run: pio run --environment esp32-2432s028
+
+      - name: Collect firmware artifacts
+        run: |
+          mkdir -p artifacts
+          cp .pio/build/esp32-2432s028/firmware.bin artifacts/SATulator-esp32-2432s028.bin
+          cp .pio/build/esp32-2432s028/firmware.elf artifacts/SATulator-esp32-2432s028.elf
+          cp .pio/build/esp32-2432s028/firmware.map artifacts/SATulator-esp32-2432s028.map
+
+      - name: Upload firmware artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: SATulator-${{ github.ref_name }}-${{ github.sha }}
+          path: artifacts/
+          if-no-files-found: error
+          retention-days: 30
+
+  deploy-pages:
+    name: Deploy documentation to GitHub Pages
+    needs: build-firmware
+    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload documentation site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs/
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
