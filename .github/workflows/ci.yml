@@ -34,6 +34,11 @@ jobs:
           cp .pio/build/esp32-2432s028/firmware.bin artifacts/SATulator-esp32-2432s028.bin
           cp .pio/build/esp32-2432s028/firmware.elf artifacts/SATulator-esp32-2432s028.elf
           cp .pio/build/esp32-2432s028/firmware.map artifacts/SATulator-esp32-2432s028.map
+          cp .pio/build/esp32-2432s028/bootloader.bin artifacts/SATulator-esp32-2432s028-bootloader.bin
+          cp .pio/build/esp32-2432s028/partitions.bin artifacts/SATulator-esp32-2432s028-partitions.bin
+          cp ~/.platformio/packages/framework-arduinoespressif32/tools/partitions/boot_app0.bin artifacts/SATulator-esp32-2432s028-boot_app0.bin
+          cp scripts/flash-firmware-linux.sh artifacts/flash-firmware-linux.sh
+          chmod +x artifacts/flash-firmware-linux.sh
 
       - name: Upload firmware artifacts
         uses: actions/upload-artifact@v4
