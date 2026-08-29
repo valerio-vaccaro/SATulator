@@ -31,6 +31,8 @@ Firmware artifacts produced by GitHub Actions include a complete Linux flash bun
 
 Use the serial device shown for your board, commonly `/dev/ttyUSB0` or `/dev/ttyACM0`. If automatic upload reset does not work, hold **BOOT** while the command begins.
 
+Alternatively, you can flash the board from your browser with [DIY Flasher](https://valerio-vaccaro.github.io/diyflasher/). Select the SATulator firmware files from the release artifact and follow its on-screen serial-port instructions.
+
 ## Using the converter
 
 - **Fiat** cycles through EUR, USD, CHF, GBP, and JPY.
